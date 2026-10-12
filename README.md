@@ -15,7 +15,7 @@
 
 🧙 You have **two spooky-good options** to get started:
 
-- 🍬 **Option 1 — Grab the prebuilt IPA** found here [GoFile mirror]([https://github.com](https://gofile.io/d/bAU6xErP))  and install it via **LiveContainer**, **SideStore**, or any other valid iOS sideloading method.
+- 🍬 **Option 1 — Grab the prebuilt IPA** found here [GoFile mirror](https://gofile.io/d/bAU6xErP) and install it via **LiveContainer**, **SideStore**, or any other valid iOS sideloading method.
 - 🦇 **Option 2 — Build it yourself** by combining:
   - 🧩 The `.dylib` file located in **this repo**, or downloaded directly from the official Azahar releases page: https://github.com/azahar-emu/azahar/releases
   - 📦 The **RetroArch IPA** of either Stable or Nightly found here . [LibRetro Source](https://docs.libretro.com/guides/install-ios/#app-store-vs-sideloading)
