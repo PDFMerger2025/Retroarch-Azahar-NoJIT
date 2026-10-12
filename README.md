@@ -11,7 +11,7 @@
 
 </div>
 
-🕷️ This project enables **60 FPS on Nintendo 3DS games via RetroArch's Azahar `2127.0-alpha1` core**, which 🎃 **implemented a significantly faster new interpreter for JIT-less environments, named `FastInterp`, which replaces the old `DynCom` interpreter.**  — *[@warmenhoven #2376](https://github.com/azahar-emu/azahar/pull/2376)* 🕸️
+🕷️ This project enables **60 FPS on Nintendo 3DS games via RetroArch's Azahar `2127.0-alpha1` core**, which **implemented a significantly faster new interpreter for JIT-less environments, named `FastInterp`, which replaces the old `DynCom` interpreter.**  — *[@warmenhoven #2376](https://github.com/azahar-emu/azahar/pull/2376)*
 
 🧙 You have **two spooky-good options** to get started:
 
@@ -23,7 +23,7 @@
 
 <div align="center">
 
-### 🎃 🕸️ 👻 **Happy Haunting — and Happy 60 FPS!** 👻 🕸️ 🎃
+###  🕸️ 👻 **Happy Haunting — and Happy 60 FPS!** 👻 🕸️ 
 
 <img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" width="300" alt="Spooky Halloween" />
 
