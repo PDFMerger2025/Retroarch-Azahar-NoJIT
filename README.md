@@ -1,341 +1,336 @@
-[![Crowdin](https://badges.crowdin.net/retroarch/localized.svg)](https://crowdin.com/project/retroarch)
-
-# RetroArch
-
-RetroArch is the reference frontend for the libretro API.
-Popular examples of implementations for this API includes video game system emulators and game engines as well as
-more generalized 3D programs.
-These programs are instantiated as dynamic libraries. We refer to these as "libretro cores".
-
-![XMB menu driver](docs/XMB-main-menu.jpg "XMB menu driver")
-
-![rgui menu driver](docs/rgui-main-menu.jpg "rgui menu driver")
-
-![glui menu driver](docs/glui-main-menu.jpg "glui menu driver")
-
-![ozone menu driver](docs/ozone-main-menu.jpg "ozone menu driver")
-
-## libretro
-
-[libretro](https://www.libretro.com) is an API that exposes generic audio/video/input callbacks.
-A frontend for libretro (such as RetroArch) handles video output, audio output, input and application lifecycle.
-A libretro core written in portable C or C++ can run seamlessly on many platforms with very little to no porting effort.
-
-While RetroArch is the reference frontend for libretro, several other projects have used the libretro
-interface to include support for emulators and/or game engines. libretro is completely open and free for anyone to use.
-
-[libretro API header](https://github.com/libretro/RetroArch/blob/master/libretro-common/include/libretro.h)
-
-## Binaries
-
-Latest binaries are currently hosted on the [buildbot](http://buildbot.libretro.com/).
-
-## Support
-
-To reach developers, either make an issue here on GitHub, make a thread on the [forum](https://www.libretro.com/forums/), chat on [Discord](https://discord.gg/C4amCeV). You could create a post in [Reddit](https://www.reddit.com/r/RetroArch/) with *Technical Support* flair.
+# 🎃 RetroArch Azahar Core Updater for iOS 
+> <img src="https://media.giphy.com/media/3o7abKhOpu0NwenH3O/giphy.gif" width="480" alt="Halloween pumpkin" />
 
-## Documentation
-
-See our [Documentation Center](https://docs.libretro.com/). On Unix, man-pages are provided.
-More developer-centric stuff is found [here](https://docs.libretro.com/development/libretro-overview/).
-
-## Related projects
-
-   - Cg/HLSL shaders: [common-shaders](https://github.com/libretro/common-shaders)
-   - slang shaders: [slang-shaders](https://github.com/libretro/slang-shaders)
-   - GLSL shaders: [glsl-shaders](https://github.com/libretro/glsl-shaders)
-   - Helper scripts to build libretro implementations: [libretro-super](https://github.com/libretro/libretro-super)
-   - GitHub mirrors of projects, useful for generating diff files: [libretro-mirrors](https://github.com/libretro-mirrors/)
-
-## Philosophy
-
-RetroArch attempts to be small and lean
-while still having all the useful core features expected from an emulator.
-It is designed to be very portable and features a gamepad-centric and touchscreen UI.
-It also has a full-featured command-line interface.
-
-In some areas, RetroArch goes beyond and emphasizes on not-so-common technical features such as multi-pass shader support,
-real-time rewind (Braid-style), video recording (using FFmpeg), run-ahead input latency removal, etc.
-
-RetroArch also emphasizes being easy to integrate into various launcher frontends.
+## 🕸️ 👻  Why This Exists  👻 🕸️
 
-## Platforms
+<div align="center">
 
-RetroArch has been ported to the following platforms:
-   - Android (2.x to most recent version)
-   - Apple iOS
-   - Apple macOS (PPC, x86-32 and x86-64)
-   - Apple tvOS
-   - Blackberry
-   - DOS
-   - Emscripten (WebAssembly and JavaScript)
-   - FreeBSD
-   - Haiku
-   - LG webOS
-   - Linux
-   - Original Microsoft Xbox
-   - Microsoft Xbox 360 (Libxenon/XeXDK)
-   - Microsoft Xbox One
-   - Microsoft Xbox Series S/X
-   - Miyoo
-   - NetBSD
-   - Nintendo NES/SNES Classic Edition
-   - Nintendo GameCube
-   - Nintendo Wii
-   - Nintendo Switch
-   - Nintendo Wii U
-   - Nintendo 3DS/2DS
-   - OpenBSD
-   - OpenDingux
-   - PlayStation2
-   - PlayStation3
-   - PlayStation4
-   - PlayStation Portable
-   - PlayStation Vita
-   - Raspberry Pi
-   - ReactOS
-   - Redox OS
-   - RetroFW
-   - RS90
-   - SerenityOS
-   - Solaris
-   - Windows NT 3.5
-   - Windows 95
-   - Windows 98
-   - Windows 2000
-   - Windows XP
-   - Windows Millennium
-   - Windows Vista
-   - Windows 7
-   - Windows 8
-   - Windows 10
-   - Windows 11
+### 🦇 **Unlock 60 FPS in 3DS games on RetroArch for iOS!** 🦇
 
-## Dependencies (PC)
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=22&duration=2800&pause=900&color=FF7518&center=true&vCenter=true&width=700&lines=%F0%9F%8E%83+60+FPS+on+3DS+games+via+RetroArch!;%F0%9F%91%BB+Powered+by+Azahar+2127.0-alpha1;%F0%9F%95%B8%EF%B8%8F+FastInterp+replaces+DynCom;%F0%9F%94%A5+No+JIT+required!" alt="Typing SVG" />
 
-There are no true hard dependencies per se.
+</div>
 
-On Windows, RetroArch can run with only Win32 as dependency.
+🕷️ This project enables **60 FPS on Nintendo 3DS games via RetroArch's Azahar `2127.0-alpha1` core**, which 🎃 **implemented a significantly faster new interpreter for JIT-less environments, named `FastInterp`, which replaces the old `DynCom` interpreter.**  — *[@warmenhoven #2376](https://github.com/azahar-emu/azahar/pull/2376)* 🕸️
 
-On Linux, there are no true dependencies. For optimal usage, the
-following dependencies come as recommended:
+🧙 You have **two spooky-good options** to get started:
 
-   - GL headers / Vulkan headers
-   - X11 headers and libs, or EGL/KMS/GBM
+- 🍬 **Option 1 — Grab the prebuilt IPA** and install it via **LiveContainer**, **SideStore**, or any other valid iOS sideloading method.
+- 🦇 **Option 2 — Build it yourself** by combining:
+  - 🧩 The `.dylib` file located in **this repo**, or downloaded directly from the official Azahar releases page: https://github.com/azahar-emu/azahar/releases
+  - 📦 The **RetroArch IPA** of your choice
+  - 🖥️ Then paste the one-command script below into **Terminal on macOS**. 🍬
 
-OSX port of RetroArch requires latest versions of Xcode to build.
+<div align="center">
 
-RetroArch can utilize these libraries if enabled:
+### 🎃 🕸️ 👻 **Happy Haunting — and Happy 60 FPS!** 👻 🕸️ 🎃
 
-   - nvidia-cg-toolkit
-   - libfreetype2 (TTF font rendering on screen)
+<img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" width="300" alt="Spooky Halloween" />
 
-RetroArch needs at least one of these audio driver libraries:
+</div>
 
-   - ALSA
-   - OSS
-   - RoarAudio
-   - RSound
-   - OpenAL
-   - JACK
-   - SDL
-   - PulseAudio
-   - PipeWire
-   - XAudio2 (Win32, Xbox 360)
-   - DirectSound (Win32, Xbox 1)
-   - CoreAudio (OSX, iOS)
+---
 
-To run properly, RetroArch requires a libretro implementation present; however, as it's typically loaded
-dynamically, it's not required at build time.
+## ✨ What This Does
 
-## Dependencies (Console ports, mobile)
+This repository provides a **one-command macOS script** that:
 
-Console ports have their own dependencies, but generally do not require
-anything other than what the respective SDKs provide.
+- 📦 Takes your existing `RetroArch.ipa`
+- 🔁 Replaces the bundled `azahar.libretro.framework` executable
+- 🧩 Installs your newer `azahar_libretro.dylib` as the Azahar core
+- 🛡️ Preserves the original framework install name
+- 🧹 Removes the old, now-invalid framework signature
+- 📦 Repacks everything into a new IPA
+- 📲 Leaves the IPA ready for signing and installation through AltStore
 
-## Requirements
+---
 
-### OpenGL1 ###
-Your videocard needs to at least support the OpenGL 1.1 spec.
+## ⚠️ Important Requirements
 
-***Shaders***: N/A
+| Requirement | Details |
+|---|---|
+| 📱 Device | iPhone or iPad |
+| 🍎 iOS version | iOS 12 or newer |
+| 🖥️ Computer | macOS with Terminal |
+| 📦 Input IPA | `RetroArch.ipa` containing the bundled Azahar framework |
+| 🧩 New core | `azahar_libretro.dylib` built for iOS ARM64 |
+| 🛠️ Signing | AltStore or another valid iOS signing workflow |
 
-**Menu driver support**: MaterialUI, XMB, Ozone and RGUI should all work correctly.
-XMB won't have shader pipeline effects because of the aforementioned lack of shader
-support.
+> 🚨 **This is iOS-only.**
+> This workflow is not intended for macOS, Windows, Android, tvOS, or desktop RetroArch installations.
 
-### OpenGL2 ###
-Your videocard needs to at least support the OpenGL 2.1 spec.
+---
 
-***Shaders:*** You can choose between either NVIDIA Cg shaders (deprecated, requires separate runtime
-to be installed on your system), or GLSL shaders.
+## 📦 Required Files
 
-***Menu driver support:*** MaterialUI, XMB, Ozone and RGUI should all work correctly.
+Place both files on your **macOS Desktop** with these exact names:
 
-### OpenGL3 ###
-Your videocard needs to at least support the OpenGL 3.2 core feature spec.
+```text
+~/Desktop/RetroArch.ipa
+~/Desktop/azahar_libretro.dylib
+```
 
-***Shaders:*** You will be able to use modern Slang shaders with this driver.
+The script creates this output:
 
-***Menu driver support:*** MaterialUI, XMB, Ozone and RGUI should all work correctly.
+```text
+~/Desktop/RetroArch-Azahar-Updated.ipa
+```
 
-### Direct3D 11 ###
-Your videocard needs to at least support the Direct3D11 11.0 spec. The card
-also needs to support at least the Shader Model 4.0.
+### ✅ Expected IPA structure
 
-***Shaders:*** You will be able to use modern Slang shaders with this driver.
+Your input IPA must already contain the bundled Azahar framework:
 
-***Menu driver support:*** MaterialUI, XMB, Ozone and RGUI should all work correctly.
+```text
+Payload/
+└── RetroArch.app/
+    └── Frameworks/
+        └── azahar.libretro.framework/
+            ├── Info.plist
+            ├── azahar.libretro
+            └── _CodeSignature/
+```
 
-### Vulkan ###
-Your videocard needs to at least support the Vulkan 1.0 spec.
+---
 
-***Shaders:*** You will be able to use modern Slang shaders with this driver.
+## 🚀 One-Command Installation Script
 
-***Menu driver support:*** MaterialUI, XMB, Ozone and RGUI should all work correctly.
+Copy **everything inside the code block below**, paste it into **Terminal**, and press **Return**.
 
-## Configuring
+```bash
+python3 <<'PY'
+import os
+import pathlib
+import plistlib
+import shutil
+import subprocess
+import tempfile
+
+desktop = pathlib.Path.home() / "Desktop"
+ipa = desktop / "RetroArch.ipa"
+new_core = desktop / "azahar_libretro.dylib"
+output = desktop / "RetroArch-Azahar-Updated.ipa"
+
+for path in (ipa, new_core):
+    if not path.is_file():
+        raise SystemExit(f"Missing input file: {path}")
+
+if output.exists():
+    raise SystemExit(f"Output already exists; rename or remove it first: {output}")
+
+work = pathlib.Path(tempfile.mkdtemp(prefix="RetroArch-Azahar-Update-", dir=desktop))
+subprocess.run(
+    ["/usr/bin/unzip", "-q", str(ipa), "-d", str(work)],
+    check=True,
+)
+
+framework = (
+    work / "Payload" / "RetroArch.app" / "Frameworks"
+    / "azahar.libretro.framework"
+)
+plist = framework / "Info.plist"
+
+if not plist.is_file():
+    raise SystemExit(f"Existing Azahar framework not found: {framework}")
+
+with plist.open("rb") as f:
+    info = plistlib.load(f)
+
+executable = info.get("CFBundleExecutable")
+if not executable or pathlib.Path(executable).name != executable:
+    raise SystemExit("Framework has an invalid CFBundleExecutable value.")
 
-The default configuration is defined in `config.def.h`.
-It is not recommended to change this unless you know what you're doing.
-These can later be tweaked by using a config file.
-A sample configuration file is installed to `/etc/retroarch.cfg`. This is the system-wide config file.
+binary = framework / executable
+if not binary.is_file():
+    raise SystemExit(f"Existing framework executable not found: {binary}")
 
-RetroArch will on startup create a config file in `$XDG\_CONFIG\_HOME/retroarch/retroarch.cfg` if it does not exist.
-Users only need to configure a certain option if the desired value deviates from the value defined in config.def.h.
+result = subprocess.run(
+    ["/usr/bin/otool", "-D", str(binary)],
+    capture_output=True,
+    text=True,
+    check=True,
+)
+lines = [line.strip() for line in result.stdout.splitlines() if line.strip()]
+if len(lines) != 2:
+    raise SystemExit(f"Could not read one install name:\n{result.stdout}")
+install_name = lines[1]
 
-To configure joypads, use the built-in menu or manually configure them in `retroarch.cfg`.
+shutil.copy2(new_core, binary)
+os.chmod(binary, 0o755)
 
-## Compiling and installing
+subprocess.run(
+    ["/usr/bin/xcrun", "install_name_tool", "-id", install_name, str(binary)],
+    check=True,
+)
 
-Instructions for compiling and installing RetroArch can be found in the [Libretro/RetroArch Documentation Center](https://docs.libretro.com/).
+signature_directory = framework / "_CodeSignature"
+if signature_directory.exists():
+    shutil.rmtree(signature_directory)
 
-## CRT 15Khz Resolution Switching
+subprocess.run(
+    ["/usr/bin/zip", "-qry", str(output), "Payload"],
+    cwd=work,
+    check=True,
+)
 
-CRT SwitchRes will turn on, on the fly. However, you will need to restart RetroArch to disable it. With CRT SwitchRes enable RetroArch will start in 2560 x 480 @ 60.
+print(f"Replaced executable: {binary}")
+print(f"Preserved install name: {install_name}")
+print(f"Created IPA: {output}")
+print("Sign the modified IPA with AltStore before installing.")
+PY
+```
 
-If you are running Windows, before enabling the CRT SwitchRes options please make sure you have installed CRTEmudriver and installed some modelines. The minimum modelines for all games to switch correctly are:
+---
 
-- 2560 x 192 @ 60.000000
-- 2560 x 200 @ 60.000000
-- 2560 x 240 @ 60.000000
-- 2560 x 224 @ 60.000000
-- 2560 x 237 @ 60.000000
-- 2560 x 256 @ 50.000000
-- 2560 x 254 @ 55.000000
-- 2560 x 448 @ 60.000000
-- 2560 x 480 @ 60.000000
+## ✅ Successful Output
 
-Install these modelines replacing 2560 with your desired super resolution. The above resolutions are NTSC only so if you would be playing any PAL content please add PAL modelines:
+If everything works, Terminal should show output similar to this:
 
-- 2560 x 192 @ 50.000000
-- 2560 x 200 @ 50.000000
-- 2560 x 240 @ 50.000000
-- 2560 x 224 @ 50.000000
-- 2560 x 288 @ 50.000000
-- 2560 x 237 @ 50.000000
-- 2560 x 254 @ 55.000000
-- 2560 x 448 @ 50.000000
-- 2560 x 480 @ 50.000000
+```text
+Replaced executable: /Users/YOURUSERNAME/Desktop/RetroArch-Azahar-Update-XXXXXXXX/Payload/RetroArch.app/Frameworks/azahar.libretro.framework/azahar.libretro
+Preserved install name: @rpath/azahar_libretro.dylib
+Created IPA: /Users/YOURUSERNAME/Desktop/RetroArch-Azahar-Updated.ipa
+Sign the modified IPA with AltStore before installing.
+```
 
-Some games will require higher PAL resolutions which should also be installed:
+You will now have a new IPA on your Desktop:
 
-- 2560 x 512 @ 50.000000
-- 2560 x 576 @ 50.000000
+```text
+~/Desktop/RetroArch-Azahar-Updated.ipa
+```
 
-Ideally install all these modelines and everything will work great.
+---
 
-## Super Resolutions
+## 📲 Install with AltStore
 
-The default super resolution is 2560. It is displayed just under the CRT switch option, which can be found in video settings. This can be changed within the retroarch.cfg. The only compatible resolutions are 1920, 2560 and 3840. Any other resolutions will be ignored and native switching will be activated.
+1. 💾 Back up your RetroArch saves and configuration.
+2. 📱 Transfer `RetroArch-Azahar-Updated.ipa` to your iPhone or iPad.
+3. 🛠️ Open **AltStore**.
+4. 📥 Install `RetroArch-Azahar-Updated.ipa`.
+5. 🎮 Open **RetroArch**.
+6. 🧩 Go to **Load Core**.
+7. 🔍 Select **Azahar**.
+8. 🕹️ Load a Nintendo 3DS game and play.
 
-## Native Resolutions
+> ⚠️ The generated IPA is **unsigned**. It must be signed through AltStore or another valid iOS signing workflow before it can be installed.
 
-If native resolutions are activated you will need a whole new set of modelines:
+---
 
-- 256 x 240 @ 50.006977 SNESpal
-- 256 x 448 @ 50.006977 SNESpal
-- 512 x 224 @ 50.006977 SNESpal
-- 512 x 240 @ 50.006977 SNESpal
-- 512 x 448 @ 50.006977 SNESpal
-- 256 x 240 @ 60.098812 SNESntsc
-- 256 x 448 @ 60.098812 SNESntsc
-- 512 x 240 @ 60.098812 SNESntsc
-- 512 x 224 @ 60.098812 SNESntsc
-- 512 x 448 @ 60.098812 SNESntsc
-- 256 x 192 @ 59.922745 MDntsc
-- 256 x 224 @ 59.922745 MDntsc
-- 320 x 224 @ 59.922745 MDntsc
-- 320 x 240 @ 59.922745 MDntsc
-- 320 x 448 @ 59.922745 MDntsc
-- 320 x 480 @ 59.922745 MDntsc
-- 256 x 192 @ 49.701458 MDpal
-- 256 x 224 @ 49.701458 MDpal
-- 320 x 224 @ 49.701458 MDpal
-- 320 x 240 @ 49.701458 MDpal
-- 320 x 288 @ 49.701458 MDpal
-- 320 x 448 @ 49.701458 MDpal
-- 320 x 480 @ 49.701458 MDpal
-- 320 x 576 @ 49.701458 MDpal
-- 256 x 288 @ 49.701458 MSYSpal
-- 256 x 240 @ 60.098812 NESntsc
-- 256 x 240 @ 50.006977 NESpal
+## 🧠 How It Works
 
-- 640 x 237 @ 60.130001 N64ntsc
-- 640 x 240 @ 60.130001 N64ntsc
-- 640 x 480 @ 60.130001 N64ntsc
-- 640 x 288 @ 50.000000 N64pal
-- 640 x 480 @ 50.000000 N64pal
-- 640 x 576 @ 50.000000 N64pal
+RetroArch on iOS packages emulator cores as frameworks inside the application bundle:
 
-- 256 x 252 @ 49.759998 PSXpal
-- 320 x 252 @ 49.759998 PSXpal
-- 384 x 252 @ 49.759998 PSXpal
-- 640 x 252 @ 49.759998 PSXpal
-- 640 x 540 @ 49.759998 PSXpal
+```text
+Payload/RetroArch.app/Frameworks/azahar.libretro.framework
+```
 
-- 384 x 240 @ 59.941002 PSXntsc
-- 256 x 480 @ 59.941002 PSXntsc
+This script replaces only the executable inside the existing framework:
 
-- 352 x 240 @ 59.820000 Saturn/SGFX_NTSCp
-- 704 x 240 @ 59.820000 SaturnNTSCp
-- 352 x 480 @ 59.820000 SaturnNTSCi
-- 704 x 480 @ 59.820000 SaturnNTSCi
-- 352 x 288 @ 49.701458 SaturnPALp
-- 704 x 288 @ 49.701458 SaturnPALp
-- 352 x 576 @ 49.701458 SaturnPALi
-- 704 x 576 @ 49.701458 SaturnPALi
+```text
+azahar.libretro
+```
 
-- 240 x 160 @ 59.730000 GBA
-- 320 x 200 @ 60.000000 Doom
+It preserves the original install name:
 
-// Arcade
+```text
+@rpath/azahar_libretro.dylib
+```
 
-- 400 x 254 @ 54.706841 MK
-- 384 x 224 @ 59.637405 CPS1
+It does **not** inject a second core, modify RetroArch's main executable, or change the bundle identifier.
 
-These modelines are more accurate giving exact hz. However, some games may have unwanted results. This is due to mid-scanline resolution changes on the original hardware. For the best results super resolutions are the way to go.
+The old framework signature is removed because the executable has changed. The resulting IPA must be signed again before installation.
 
-## CRT resolution switching & MAME
+---
 
-Some arcade resolutions can be very different from consumer CRTs. There is resolution detection to ensure MAME games will be displayed in the closest available resolution but drawn at their native resolution within this resolution. Meaning that the MAME game will look just like the original hardware.
+## 🛠️ Troubleshooting
 
-MAME ROMs that run in a vertical aspect like DoDonPachi need to be rotated within MAME before resolution switching and aspect correction will work. Do this before enabling CRT SwitchRes so that RetroArch will run in your desktop resolution. Once you have rotated any games that may need it turn CRT SwitchRes on.
+### ❌ Missing input file
 
-## Socials
+Make sure both files are exactly on your Desktop:
 
-The links below belong to our official channels. Links other than this may have been created by fans, independent members or followers. We seriously recommend using our original resources.
+```text
+~/Desktop/RetroArch.ipa
+~/Desktop/azahar_libretro.dylib
+```
 
-- [Website](https://www.retroarch.com/)
-- [Blog](https://libretro.com/)
-- [Facebook](https://www.facebook.com/libretro)
-- [Twitter](https://twitter.com/libretro)
-- [Reddit](https://www.reddit.com/r/RetroArch/)
-- [YouTube](https://www.youtube.com/@Libretro)
-- [Steam](https://store.steampowered.com/app/1118310/RetroArch/)
-- [YouTube Topic](https://www.youtube.com/channel/UCyXchL2xdEpHNzqE52w8XYw)
-- [Patreon](https://www.patreon.com/libretro)
-- [Discord](https://discord.gg/C4amCeV)
-- [Teespring](https://teespring.com/stores/retroarch)
-- [Documentation](https://docs.libretro.com/)
-- [Forum](https://forums.libretro.com/)
+Check for:
+
+- Extra spaces in filenames
+- Duplicate extensions, such as `.ipa.ipa`
+- A downloaded `.zip` that was not renamed to `.dylib`
+
+### ❌ Output already exists
+
+Delete or rename the existing output file:
+
+```text
+~/Desktop/RetroArch-Azahar-Updated.ipa
+```
+
+The script intentionally refuses to overwrite an existing IPA.
+
+### ❌ Existing Azahar framework not found
+
+Your input IPA may not contain the bundled Azahar framework.
+
+Check it with:
+
+```bash
+unzip -Z1 "$HOME/Desktop/RetroArch.ipa" | grep -i azahar
+```
+
+You should see something like:
+
+```text
+Payload/RetroArch.app/Frameworks/azahar.libretro.framework/
+```
+
+### ⚠️ `install_name_tool` signature warning
+
+A warning saying that changes will invalidate the code signature is **expected**.
+
+The script removes the old framework signature and creates an unsigned IPA for you to sign afterward.
+
+An actual Python traceback or command error is different—stop and share the exact error message.
+
+---
+
+## 🔍 Verify Your New Core
+
+Before using the script, you can verify that your replacement dylib targets iOS ARM64:
+
+```bash
+file "$HOME/Desktop/azahar_libretro.dylib"
+xcrun vtool -show-build "$HOME/Desktop/azahar_libretro.dylib"
+otool -L "$HOME/Desktop/azahar_libretro.dylib"
+```
+
+You want to see:
+
+- `Mach-O 64-bit dynamically linked shared library arm64`
+- `platform IOS`
+- A minimum iOS version compatible with your device
+
+---
+
+## 📌 Quick Summary
+
+1. 🖥️ Put `RetroArch.ipa` and `azahar_libretro.dylib` on your macOS Desktop.
+2. 📋 Paste the one-command script into Terminal.
+3. ▶️ Press Return.
+4. 📦 Get `RetroArch-Azahar-Updated.ipa`.
+5. 📲 Sign and install it with AltStore.
+6. 🎮 Open RetroArch → Load Core → Azahar.
+7. 🕹️ Play Nintendo 3DS games.
+
+---
+
+## 🙌 Credits
+
+- 🎮 **RetroArch / Libretro** — RetroArch frontend and libretro ecosystem
+- 🍋 **Azahar Emulator** — Nintendo 3DS emulator and libretro core
+- 👻 **[@warmenhoven](https://github.com/warmenhoven)** — Author of the `FastInterp` interpreter PR ([#2376](https://github.com/azahar-emu/azahar/pull/2376))
+- 📲 **AltStore** — iOS sideloading and signing workflow
+
+---
+
+> ⚠️ This project is a **forked RetroArch workflow** and is intended exclusively for **iOS 12+ devices**. Use only IPAs, cores, and signing methods you are legally permitted to use.
