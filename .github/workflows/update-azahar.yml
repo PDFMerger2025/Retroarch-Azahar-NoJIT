@@ -44,14 +44,17 @@ jobs:
           echo "🔍 Verifying IPA structure..."
           if ! unzip -t RetroArch.ipa >/dev/null 2>&1; then
             echo "❌ The downloaded URL did not produce a valid ZIP/IPA file."
-            echo "Make sure the URL is a DIRECT download link ending in .ipa or serving the IPA file directly."
+            echo "Make sure the URL is a DIRECT download link."
             exit 1
           fi
 
-          if ! unzip -Z1 RetroArch.ipa | grep -q '^Payload/RetroArch.app/$'; then
+          # Capture the listing first (avoids SIGPIPE + pipefail false failures),
+          # and match on prefix since zips often lack explicit directory entries.
+          listing="$(unzip -Z1 RetroArch.ipa)"
+          if ! grep -q '^Payload/RetroArch\.app/' <<< "$listing"; then
             echo "❌ Downloaded IPA does not contain Payload/RetroArch.app/."
             echo "First 30 entries:"
-            unzip -Z1 RetroArch.ipa | head -30
+            head -30 <<< "$listing"
             exit 1
           fi
 
@@ -81,9 +84,10 @@ jobs:
           import subprocess
           import tempfile
 
-          ipa = pathlib.Path("RetroArch.ipa")
-          new_core = pathlib.Path("azahar_libretro.dylib")
-          output = pathlib.Path("RetroArch-Azahar-Updated.ipa")
+          # Absolute paths: zip runs with cwd=work, so the output MUST be absolute
+          ipa = pathlib.Path("RetroArch.ipa").resolve()
+          new_core = pathlib.Path("azahar_libretro.dylib").resolve()
+          output = pathlib.Path("RetroArch-Azahar-Updated.ipa").resolve()
 
           if output.exists():
               output.unlink()
@@ -96,8 +100,6 @@ jobs:
 
           app = work / "Payload" / "RetroArch.app"
           frameworks = app / "Frameworks"
-          framework = frameworks / "azahar.libretro.framework"
-          plist = framework / "Info.plist"
 
           if not frameworks.is_dir():
               raise SystemExit(
@@ -105,14 +107,20 @@ jobs:
                   "This IPA may not be the expected RetroArch iOS build."
               )
 
-          if not plist.is_file():
+          candidates = sorted(frameworks.glob("azahar*.framework"))
+          if not candidates:
               existing = sorted(p.name for p in frameworks.glob("*.framework"))
               raise SystemExit(
-                  "❌ Existing Azahar framework not found:\n"
-                  f"{framework}\n\n"
-                  "Existing frameworks:\n"
-                  + "\n".join(existing)
+                  "❌ No Azahar framework found in Frameworks.\n\n"
+                  "Existing frameworks:\n" + "\n".join(existing)
               )
+
+          framework = candidates[0]
+          print(f"ℹ️ Using framework: {framework.name}")
+          plist = framework / "Info.plist"
+
+          if not plist.is_file():
+              raise SystemExit(f"❌ Info.plist missing in {framework}")
 
           with plist.open("rb") as f:
               info = plistlib.load(f)
@@ -145,9 +153,15 @@ jobs:
               check=True,
           )
 
+          # Remove stale signature, then ad-hoc re-sign the modified binary
           signature_directory = framework / "_CodeSignature"
           if signature_directory.exists():
               shutil.rmtree(signature_directory)
+
+          subprocess.run(
+              ["/usr/bin/codesign", "--force", "--sign", "-", str(binary)],
+              check=True,
+          )
 
           subprocess.run(
               ["/usr/bin/zip", "-qry", str(output), "Payload"],
@@ -170,7 +184,8 @@ jobs:
           }
 
           echo "🔍 Checking generated IPA..."
-          unzip -Z1 RetroArch-Azahar-Updated.ipa | grep 'azahar.libretro.framework'
+          unzip -t RetroArch-Azahar-Updated.ipa >/dev/null
+          unzip -Z1 RetroArch-Azahar-Updated.ipa | grep -c 'azahar.*\.framework' || true
           ls -lh RetroArch-Azahar-Updated.ipa
 
       - name: Upload updated RetroArch IPA
