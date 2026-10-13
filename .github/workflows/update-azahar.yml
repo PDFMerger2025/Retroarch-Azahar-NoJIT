@@ -1,0 +1,146 @@
+name: 🎮 Update RetroArch Azahar Core
+
+on:
+  workflow_dispatch:
+    inputs:
+      ipa_url:
+        description: "Direct URL to RetroArch.ipa"
+        required: true
+        type: string
+
+jobs:
+  update-azahar:
+    name: Replace bundled Azahar core
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download RetroArch IPA
+        run: |
+          set -euo pipefail
+
+          IPA_URL="${{ github.event.inputs.ipa_url }}"
+
+          if [[ -z "$IPA_URL" ]]; then
+            echo "❌ No IPA URL was provided."
+            exit 1
+          fi
+
+          echo "⬇️ Downloading RetroArch IPA..."
+          curl -L --fail --retry 3 -o RetroArch.ipa "$IPA_URL"
+
+          echo "✅ Download complete."
+          ls -lh RetroArch.ipa
+
+      - name: Verify required files
+        run: |
+          set -euo pipefail
+
+          test -f RetroArch.ipa || { echo "❌ RetroArch.ipa was not downloaded."; exit 1; }
+          test -f azahar_libretro.dylib || { echo "❌ azahar_libretro.dylib was not found in the repository root."; exit 1; }
+
+          echo "✅ Required files found:"
+          ls -lh RetroArch.ipa azahar_libretro.dylib
+
+      - name: Replace bundled Azahar core
+        run: |
+          set -euo pipefail
+
+          python3 <<'PY'
+          import os
+          import pathlib
+          import plistlib
+          import shutil
+          import subprocess
+          import tempfile
+
+          ipa = pathlib.Path("RetroArch.ipa")
+          new_core = pathlib.Path("azahar_libretro.dylib")
+          output = pathlib.Path("RetroArch-Azahar-Updated.ipa")
+
+          if output.exists():
+              output.unlink()
+
+          work = pathlib.Path(tempfile.mkdtemp(prefix="retroarch-azahar-"))
+          subprocess.run(
+              ["/usr/bin/unzip", "-q", str(ipa), "-d", str(work)],
+              check=True,
+          )
+
+          framework = (
+              work / "Payload" / "RetroArch.app" / "Frameworks"
+              / "azahar.libretro.framework"
+          )
+          plist = framework / "Info.plist"
+
+          if not plist.is_file():
+              raise SystemExit(f"❌ Existing Azahar framework not found: {framework}")
+
+          with plist.open("rb") as f:
+              info = plistlib.load(f)
+
+          executable = info.get("CFBundleExecutable")
+          if not executable or pathlib.Path(executable).name != executable:
+              raise SystemExit("❌ Framework has an invalid CFBundleExecutable value.")
+
+          binary = framework / executable
+          if not binary.is_file():
+              raise SystemExit(f"❌ Existing framework executable not found: {binary}")
+
+          result = subprocess.run(
+              ["/usr/bin/otool", "-D", str(binary)],
+              capture_output=True,
+              text=True,
+              check=True,
+          )
+          lines = [line.strip() for line in result.stdout.splitlines() if line.strip()]
+          if len(lines) != 2:
+              raise SystemExit(f"❌ Could not read one install name:\n{result.stdout}")
+
+          install_name = lines[1]
+
+          shutil.copy2(new_core, binary)
+          os.chmod(binary, 0o755)
+
+          subprocess.run(
+              ["/usr/bin/xcrun", "install_name_tool", "-id", install_name, str(binary)],
+              check=True,
+          )
+
+          signature_directory = framework / "_CodeSignature"
+          if signature_directory.exists():
+              shutil.rmtree(signature_directory)
+
+          subprocess.run(
+              ["/usr/bin/zip", "-qry", str(output), "Payload"],
+              cwd=work,
+              check=True,
+          )
+
+          print(f"✅ Replaced executable: {binary}")
+          print(f"✅ Preserved install name: {install_name}")
+          print(f"✅ Created IPA: {output}")
+          PY
+
+      - name: Verify generated IPA
+        run: |
+          set -euo pipefail
+
+          test -f RetroArch-Azahar-Updated.ipa || {
+            echo "❌ RetroArch-Azahar-Updated.ipa was not created."
+            exit 1
+          }
+
+          echo "🔍 Checking generated IPA..."
+          unzip -Z1 RetroArch-Azahar-Updated.ipa | grep 'azahar.libretro.framework'
+          ls -lh RetroArch-Azahar-Updated.ipa
+
+      - name: Upload updated RetroArch IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: RetroArch-Azahar-Updated
+          path: RetroArch-Azahar-Updated.ipa
+          if-no-files-found: error
+          retention-days: 7
