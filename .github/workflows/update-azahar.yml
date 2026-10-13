@@ -18,10 +18,10 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Download RetroArch IPA
+        env:
+          IPA_URL: ${{ github.event.inputs.ipa_url }}
         run: |
           set -euo pipefail
-
-          IPA_URL="${{ github.event.inputs.ipa_url }}"
 
           if [[ -z "$IPA_URL" ]]; then
             echo "❌ No IPA URL was provided."
@@ -29,10 +29,31 @@ jobs:
           fi
 
           echo "⬇️ Downloading RetroArch IPA..."
-          curl -L --fail --retry 3 -o RetroArch.ipa "$IPA_URL"
+          curl -L \
+            --fail \
+            --retry 3 \
+            --retry-delay 2 \
+            --connect-timeout 30 \
+            -o RetroArch.ipa \
+            "$IPA_URL"
 
           echo "✅ Download complete."
+          file RetroArch.ipa
           ls -lh RetroArch.ipa
+
+          echo "🔍 Verifying IPA structure..."
+          if ! unzip -t RetroArch.ipa >/dev/null 2>&1; then
+            echo "❌ The downloaded URL did not produce a valid ZIP/IPA file."
+            echo "Make sure the URL is a DIRECT download link ending in .ipa or serving the IPA file directly."
+            exit 1
+          fi
+
+          if ! unzip -Z1 RetroArch.ipa | grep -q '^Payload/RetroArch.app/$'; then
+            echo "❌ Downloaded IPA does not contain Payload/RetroArch.app/."
+            echo "First 30 entries:"
+            unzip -Z1 RetroArch.ipa | head -30
+            exit 1
+          fi
 
       - name: Verify required files
         run: |
@@ -43,6 +64,10 @@ jobs:
 
           echo "✅ Required files found:"
           ls -lh RetroArch.ipa azahar_libretro.dylib
+
+          echo "🔍 New Azahar dylib information:"
+          file azahar_libretro.dylib
+          xcrun vtool -show-build azahar_libretro.dylib
 
       - name: Replace bundled Azahar core
         run: |
@@ -69,14 +94,25 @@ jobs:
               check=True,
           )
 
-          framework = (
-              work / "Payload" / "RetroArch.app" / "Frameworks"
-              / "azahar.libretro.framework"
-          )
+          app = work / "Payload" / "RetroArch.app"
+          frameworks = app / "Frameworks"
+          framework = frameworks / "azahar.libretro.framework"
           plist = framework / "Info.plist"
 
+          if not frameworks.is_dir():
+              raise SystemExit(
+                  "❌ RetroArch.app/Frameworks was not found.\n"
+                  "This IPA may not be the expected RetroArch iOS build."
+              )
+
           if not plist.is_file():
-              raise SystemExit(f"❌ Existing Azahar framework not found: {framework}")
+              existing = sorted(p.name for p in frameworks.glob("*.framework"))
+              raise SystemExit(
+                  "❌ Existing Azahar framework not found:\n"
+                  f"{framework}\n\n"
+                  "Existing frameworks:\n"
+                  + "\n".join(existing)
+              )
 
           with plist.open("rb") as f:
               info = plistlib.load(f)
